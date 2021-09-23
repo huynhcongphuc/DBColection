@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require('mysql');
 var sql = require('mssql');
 const app = express();
+
+const port = process.env.PORT || 4000;
 //MSSQL server
 
 // var dbConfig = {
@@ -69,4 +71,4 @@ app.get('/', (req, res) => {
   res.send('Xin chao');
 });
 
-app.listen(4000, () => console.log('Server listening on port 4000!') );
+app.listen(port, () => console.log('Server listening on port 4000!') );
