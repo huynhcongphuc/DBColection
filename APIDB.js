@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require("cors");
 const mysql = require('mysql');
 var sql = require('mssql');
 const app = express();
@@ -59,8 +58,13 @@ connection.connect(function (err) {
   (err) ? console.log(err) : console.log(connection);
 });
 
-app.use(cors());
-app.get('/api/news',(req, res) => {
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+app.get('/api/news', (req, res) => {
   var sql = "SELECT * FROM Data";
   connection.query(sql, function (err, results) {
     if (err) throw err;
@@ -74,4 +78,4 @@ app.get('/', (req, res) => {
   res.send('Xin chao');
 });
 
-app.listen(port, () => console.log('Server listening on port 4000!') );
+app.listen(port, () => console.log('Server listening on port 4000!'));
