@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors");
 const mysql = require('mysql');
 var sql = require('mssql');
 const app = express();
@@ -58,7 +59,8 @@ connection.connect(function (err) {
   (err) ? console.log(err) : console.log(connection);
 });
 
-app.get('/api/news', (req, res) => {
+app.use(cors());
+app.get('/api/news',(req, res) => {
   var sql = "SELECT * FROM Data";
   connection.query(sql, function (err, results) {
     if (err) throw err;
