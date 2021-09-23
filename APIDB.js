@@ -58,7 +58,7 @@ connection.connect(function (err) {
   (err) ? console.log(err) : console.log(connection);
 });
 
-app.post('/api/news', (req, res) => {
+app.get('/api/news', (req, res) => {
   var sql = "SELECT * FROM Data";
   connection.query(sql, function (err, results) {
     if (err) throw err;
