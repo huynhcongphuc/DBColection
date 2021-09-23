@@ -3,7 +3,7 @@ const mysql = require('mysql');
 var sql = require('mssql');
 const app = express();
 
-//const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 //MSSQL server
 
 // var dbConfig = {
@@ -71,8 +71,4 @@ app.get('/', (req, res) => {
   res.send('Xin chao');
 });
 
-//app.listen(port, () => console.log('Server listening on port 4000!') );
-const server = app.listen(process.env.PORT || 5000, () => {
-  const port = server.address().port;
-  console.log(`Express is working on port ${port}`);
-});
+app.listen(port, () => console.log('Server listening on port 4000!') );

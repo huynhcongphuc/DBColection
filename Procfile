@@ -1,1 +1,1 @@
-web: node apidb.js
+web:node server.js
