@@ -69,13 +69,13 @@ connection.connect(function (err) {
   (err) ? console.log(err) : console.log(connection);
 });
 
-app.post(function (req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
 
-app.get('/api/news', (req, res) => {
+app.post('/api/news', (req, res) => {
   var sql = "SELECT * FROM Data";
   connection.query(sql, function (err, results) {
     if (err) throw err;
