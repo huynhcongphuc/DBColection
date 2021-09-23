@@ -1,6 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
-var sql = require('mssql');
+const sql = require('mssql');
 const app = express();
 const app2 = express();
 
@@ -9,29 +9,32 @@ const port = process.env.PORT || 4000;
 
 //MSSQL server
 
-var dbConfig = {
-  host: 'HCMCLDC.mssql.somee.com',
-  user: 'phuchuynh247_SQLLogin_1',
-  password: '5nze3wax5g',
-  database: 'HCMCLDC',
-  trustServerCertificate: true,
+const dbConfig = {
+  server: "HCMCLDC.mssql.somee.com",
+  user: "phuchuynh247_SQLLogin_1",
+  password: "5nze3wax5g",
+  database: "HCMCLDC",
+  options: {
+    encrypt: false,
+    trustServerCertificate:false
+  },
   port: 1433
 };
 
-var conn = new sql.ConnectionPool(dbConfig);
+const conn = new sql.ConnectionPool(dbConfig);
 
 conn.connect(function (err) {
   (err) ? console.log(err) : console.log(conn);
 });
 
-app2.use(function (req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
 
-app2.post('/api/mssql', (req, res) => {
-  var sqlqr = "SELECT TOP (10) [ID],[IPAddress],[Datetime],[Page],[Session],[QuocGia],[Tinh],[ThanhPho],[Cty],[Lat],[Lon] FROM [IPRecord] ORDER BY [ID] DESC";
+app.get('/api/mssql', (req, res) => {
+  var sqlqr = "SELECT TOP (10) [ID],[IPAddress],[Datetime],[Page],[Session],[QuocGia],[Tinh],[ThanhPho],[Cty],[Lat],[Lon] FROM IPRecord ORDER BY [ID] DESC";
   conn.query(sqlqr, function (err, recordset) {
     if (err) throw err;
     res.json({ recordset });
@@ -86,4 +89,4 @@ app.get('/', (req, res) => {
   res.send('Xin chao');
 });
 
-app.listen(port, () => console.log('Server listening on port 4000!'));
+app.listen(4000, () => console.log('Server listening on port 4000!'));
