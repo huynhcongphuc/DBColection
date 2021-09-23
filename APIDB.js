@@ -4,31 +4,38 @@ var sql = require('mssql');
 const app = express();
 
 const port = process.env.PORT || 4000;
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 //MSSQL server
 
-// var dbConfig = {
-//   server: "localhost",
-//   database: "FLISR_LOG",
-//   user: "phuchc",
-//   password: "123456",
-//   trustServerCertificate: true,
-//   port: 1433
-// };
+var dbConfig = {
+  host: 'HCMCLDC.mssql.somee.com',
+  user: 'phuchuynh247_SQLLogin_1',
+  password: '5nze3wax5g',
+  database: 'HCMCLDC',
+  trustServerCertificate: true,
+  port: 1433
+};
 
-// var conn = new sql.ConnectionPool(dbConfig);
+var conn = new sql.ConnectionPool(dbConfig);
 
-// conn.connect(function (err) {
-//   (err) ? console.log(err) : console.log(conn);
-// });
+conn.connect(function (err) {
+  (err) ? console.log(err) : console.log(conn);
+});
 
 
-// app.post('/api/mssql', (req, res) => {
-//   var sqlqr = "SELECT * From DataList";
-//   conn.query(sqlqr, function (err, recordset) {
-//     if (err) throw err;
-//     res.json({ recordset });
-//   });
-// });
+app.post('/api/mssql', (req, res) => {
+  var sqlqr = "SELECT TOP (10) [ID],[IPAddress],[Datetime],[Page],[Session],[QuocGia],[Tinh],[ThanhPho],[Cty],[Lat],[Lon] FROM [IPRecord] ORDER BY [ID] DESC";
+  conn.query(sqlqr, function (err, recordset) {
+    if (err) throw err;
+    res.json({ recordset });
+  });
+});
 
 //Mongo connection
 // var MongoClient = require('mongodb').MongoClient;
@@ -56,12 +63,6 @@ const connection = mysql.createConnection({
 
 connection.connect(function (err) {
   (err) ? console.log(err) : console.log(connection);
-});
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
 });
 
 app.get('/api/news', (req, res) => {
