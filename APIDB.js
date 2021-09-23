@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 var sql = require('mssql');
 const app = express();
+const app2 = express();
 
 const port = process.env.PORT || 4000;
 
@@ -23,7 +24,13 @@ conn.connect(function (err) {
   (err) ? console.log(err) : console.log(conn);
 });
 
-app.post('/api/mssql', (req, res) => {
+app2.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+app2.post('/api/mssql', (req, res) => {
   var sqlqr = "SELECT TOP (10) [ID],[IPAddress],[Datetime],[Page],[Session],[QuocGia],[Tinh],[ThanhPho],[Cty],[Lat],[Lon] FROM [IPRecord] ORDER BY [ID] DESC";
   conn.query(sqlqr, function (err, recordset) {
     if (err) throw err;
