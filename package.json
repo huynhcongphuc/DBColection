@@ -1,0 +1,23 @@
+{
+  "name": "myfirstreact",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "node APIDB.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "concurrently": "^6.2.1",
+    "express": "^4.17.1",
+    "github": "^14.0.0",
+    "mongo": "^0.1.0",
+    "mssql": "^7.2.1",
+    "mysql": "^2.18.1"
+  }
+}
