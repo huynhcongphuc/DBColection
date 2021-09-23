@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/api/mssql', (req, res) => {
+app.post('/api/mssql', (req, res) => {
   var sqlqr = "SELECT TOP (10) [ID],[IPAddress],[Datetime],[Page],[Session],[QuocGia],[Tinh],[ThanhPho],[Cty],[Lat],[Lon] FROM IPRecord ORDER BY [ID] DESC";
   conn.query(sqlqr, function (err, recordset) {
     if (err) throw err;
@@ -69,7 +69,7 @@ connection.connect(function (err) {
   (err) ? console.log(err) : console.log(connection);
 });
 
-app.use(function (req, res, next) {
+app.post(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
