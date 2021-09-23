@@ -42,20 +42,33 @@ app.post('/api/mssql', (req, res) => {
 });
 
 //Mongo connection
-// var MongoClient = require('mongodb').MongoClient;
-// var db;
+const { MongoClient } = require('mongodb');
+var db;
+const uri = "mongodb+srv://Mongodb:PuHh1234@cluster0.y7au8.mongodb.net/mongodb?retryWrites=true&w=majority";
 
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+client.connect(err => {
+  db = client.db("MongoDB");
+});
+
+// Connect through localhost
 // MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 //   // Client returned
 //   db = client.db('Data');
 // });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
-// app.post('/api/mongo', (req, res) => {
-//   db.collection('Account').find().toArray(function (err, docs) {
-//     if (err) throw err;
-//     res.json({ news: docs });
-//   });
-// });
+app.post('/api/mongo', (req, res) => {
+  db.collection('Account').find().toArray(function (err, docs) {
+    if (err) throw err;
+    res.json({ news: docs });
+  });
+});
 
 // //Mysql Connection
 const connection = mysql.createConnection({
