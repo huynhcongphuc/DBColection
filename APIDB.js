@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post('/api/mssql', (req, res) => {
+app.get('/api/mssql', (req, res) => {
   var sqlqr = "SELECT TOP (10) [ID],[IPAddress],[Datetime],[Page],[Session],[QuocGia],[Tinh],[ThanhPho],[Cty],[Lat],[Lon] FROM IPRecord ORDER BY [ID] DESC";
   conn.query(sqlqr, function (err, recordset) {
     if (err) throw err;
@@ -63,7 +63,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post('/api/mongo', (req, res) => {
+app.get('/api/mongo', (req, res) => {
   db.collection('Account').find().toArray(function (err, docs) {
     if (err) throw err;
     res.json({ news: docs });
@@ -88,7 +88,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post('/api/news', (req, res) => {
+app.get('/api/news', (req, res) => {
   var sql = "SELECT * FROM Data";
   connection.query(sql, function (err, results) {
     if (err) throw err;
