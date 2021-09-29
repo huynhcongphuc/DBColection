@@ -88,7 +88,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/api/news', (req, res) => {
+app.get('/api/mysql', (req, res) => {
   var sql = "SELECT * FROM Data";
   connection.query(sql, function (err, results) {
     if (err) throw err;
